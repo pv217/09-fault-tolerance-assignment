@@ -75,9 +75,9 @@ OpenTelemetry is a set of APIs, libraries, agents, and instrumentation to provid
 
 ### Jaeger
 
-Jaeger is an open-source, end-to-end distributed tracing system. It is used to monitor and troubleshoot microservices-based distributed systems. It is used to monitor and troubleshoot distributed systems.
+Jaeger is an open-source, end-to-end distributed tracing system. It is used to monitor and troubleshoot microservices-based distributed systems.
 
-It collects data from the services using OpenTelemetry over gRPC, stores them, and visualizes the traces in a user-friendly way.
+It collects data from the services using OpenTelemetry over gRPC, HTTP 1.1. or TChannel, stores them, and visualizes the traces in a user-friendly way.
 
 It supports:
 - Collecting traces from the services
@@ -90,8 +90,8 @@ It supports:
 ## State of the project
 
 - In `baggage-service,` there is an artificial failure in the `BaggageResource.getBaggageByPassengerId` method.
-- Smallrye fault tolerance is added to all services.
-- Opentelemetry extension is added to the `flight-service` and `baggage-service`.
+- Smallrye Fault Tolerance is added to all services.
+- OpenTelemetry extension is added to the `flight-service` and `baggage-service`.
 
 ## Tasks
 
@@ -108,7 +108,7 @@ Baggage service has 50 % of failure to retrieve baggage by passenger id.
 1. Create a passenger and baggage for the passenger.
 2. Try to retrieve the passenger with baggage using `/passenger/{passengerId}/baggage` endpoint.
     1. It should fail 50 % of the time.
-3. Add a `@Retry` annotation to the `getPassengerWithBaggage` method in `PassengerService`. Set the maximum number of retries to 4 and the delay between retries to 500 ms.
+3. Add a `@Retry` annotation to the `getPassengerWithBaggage` method in `PassengerResource`. Set the maximum number of retries to 4 and the delay between retries to 500 ms.
 4. Try again to retrieve the passenger with baggage using `/passenger/{passengerId}/baggage` endpoint.
     1. It should almost always succeed. Note the delay in the response, which means the baggage service failed, and the retry was executed.
 
@@ -173,10 +173,12 @@ In `docker-compose.yaml` set `QUARKUS_OTEL_ENDPOINT` environment variable to mar
 1. Finish the tasks
 2. Push the changes to the main branch
 3. GitHub Classroom automatically prepared a feedback pull request for you
-4. Go to the repository on GitHub and find the feedback pull request
-5. Set label to "Submitted"
-6. GitHub Actions will run basic checks for your submission
-7. Teacher will evaluate the submission as well and give you feedback
+4. GitHub Actions will run basic checks for your submission on push
+5. Teacher will evaluate the submission as well and give you feedback
+
+Resubmit the solution if the checks fail:
+1. Make changes
+2. Push again
 
 ## Hints
 
